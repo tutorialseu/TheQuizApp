@@ -49,7 +49,7 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener  {
         tvOptionThree = binding.tvOptionThree
         tvOptionFour = binding.tvOptionFour
         buttonSubmit = binding.btnSubmit
-        questionsList.addAll(Constants.getQuestions())
+        questionsList.addAll(Constants.questions)
 
         setQuestion()
 
@@ -72,7 +72,8 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener  {
         }
 
         progressBar?.progress = currentPosition
-        tvProgress?.text = resources.getString(R.string.progress_Text,currentPosition,progressBar?.max)
+        val no = currentPosition + 1
+        tvProgress?.text = resources.getString(R.string.progress_Text,no,progressBar?.max)
 
         tvQuestion?.text = question.question
         ivFlag?.setImageResource(question.image)
@@ -83,24 +84,16 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener  {
     }
 
     private fun defaultOptionsView() {
-        val options = ArrayList<TextView>()
-        tvOptionOne?.let {
-            options.add(0, it)
-        }
-        tvOptionTwo?.let {
-            options.add(1, it)
-        }
-        tvOptionThree?.let {
-            options.add(2, it)
-        }
-        tvOptionFour?.let {
-            options.add(3,it)
-        }
-
+        val options = listOf(
+        tvOptionOne,
+        tvOptionTwo,
+        tvOptionThree,
+        tvOptionFour
+        )
         for (option in options) {
-            option.setTextColor(Color.parseColor("#7A8089"))
-            option.typeface = Typeface.DEFAULT
-            option.background = ContextCompat.getDrawable(
+            option?.setTextColor(Color.parseColor("#7A8089"))
+            option?.typeface = Typeface.DEFAULT
+            option?.background = ContextCompat.getDrawable(
                 this@QuizQuestionsActivity,
                 R.drawable.default_option_border_bg
             )
